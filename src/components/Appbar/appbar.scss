@@ -1,0 +1,118 @@
+$header-background-color: var(--primary-400);
+$form-background-color: var(--primary-500);
+$header-profile-color: var(--color-duckweed);
+$header-login-btn-background-color: var(--primary-600);
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: sticky;
+  height: var(--appbar-size);
+  top: 0;
+  padding: 2em 0;
+  z-index: 99;
+  background-color: $header-background-color;
+
+  form {
+    display: flex;
+    align-items: center;
+    padding: 1.2rem 1.5rem;
+    background-color: $form-background-color;
+    width: 50%;
+    border-radius: 10px;
+    gap: 1rem;
+    position: relative;
+
+    button {
+      width: 20px;
+      cursor: pointer;
+    }
+
+    input {
+      color: white;
+      width: 90%;
+    }
+  }
+
+  &__profile {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-left: auto;
+
+    &__dp {
+      width: 40px;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    a {
+      height: 40px;
+    }
+
+    &__logout {
+      width: 22px;
+      margin-bottom: 5px;
+    }
+
+    .chat {
+      margin-top: 5px;
+    }
+
+    .upload {
+      cursor: pointer;
+      border-radius: 50%;
+      color: $header-profile-color;
+    }
+  }
+
+  .close {
+    transform: scale(1.5);
+    aspect-ratio: 1;
+  }
+
+  .hamburger {
+    display: none;
+    width: 22px;
+
+    > img {
+      width: 100%;
+    }
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+  }
+
+  .login-btn {
+    background-color: $header-login-btn-background-color;
+    padding: 0.75rem 1.5rem;
+    color: white;
+    border-radius: 10px;
+  }
+
+  @media (max-width: 800px) {
+    gap: 0.5rem;
+
+    form {
+      padding: 0.75rem;
+      flex: 1;
+    }
+
+    .hamburger {
+      display: flex;
+      align-items: center;
+    }
+
+    &__profile {
+      gap: 1rem;
+    }
+
+    .home-icon {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,143 @@
+.typing-bubble {
+  height: 72px;
+  /* width: 46px; */
+  width: 28px;
+  background: #e5e5e5;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.typing-bubble:before {
+  content: '';
+  height: 72px;
+  width: 72px;
+  left: -36px;
+  position: absolute;
+  /* display: block; */
+  background: #e5e5e5;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.typing-bubble:after {
+  content: '';
+  height: 72px;
+  width: 72px;
+  right: -36px;
+  position: absolute;
+  display: block;
+  background: #e5e5e5;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.typing-bubble .tail {
+  height: 25px;
+  width: 25px;
+  background: #e5e5e5;
+  position: absolute;
+  left: -40px;
+  bottom: 2px;
+  border-radius: 50%;
+}
+
+.typing-bubble .tail:before {
+  height: 12px;
+  width: 12px;
+  background: #e5e5e5;
+  content: '';
+  display: block;
+  border-radius: 50%;
+  position: absolute;
+  left: -10px;
+  bottom: -8px;
+}
+
+.typing-bubble .loader {
+  background: transparent;
+  position: absolute;
+  z-index: 10;
+  width: 120px;
+  display: flex;
+  /* left: -11px; */
+  left: -19px;
+  top: 27px;
+}
+
+.typing-bubble .loader .dot {
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
+  background: #c1c1c1;
+  display: flex;
+  margin: 0 0 0 8px;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.typing-bubble .loader .dot:first-child {
+  margin: 0;
+}
+
+.typing-bubble .loader .dot.one {
+  animation: cycleOne 1s ease-in-out infinite;
+  animation-direction: normal;
+}
+
+.typing-bubble .loader .dot.two {
+  animation: cycleTwo 1s ease-in-out infinite;
+  animation-direction: normal;
+}
+
+.typing-bubble .loader .dot.three {
+  animation: cycleThree 1s ease-in-out infinite;
+  animation-direction: normal;
+}
+
+@keyframes cycleOne {
+  0% {
+    background: rgba(150, 150, 150, 0.4);
+  }
+  33.333% {
+    background: rgba(150, 150, 150, 1);
+  }
+  66.6667% {
+    background: rgba(150, 150, 150, 0.4);
+  }
+  100% {
+    background: rgba(150, 150, 150, 0.4);
+  }
+}
+
+@keyframes cycleTwo{
+  0%{
+    background: rgba(150, 150, 150, 0.4);
+  }
+  33.333%{
+    background: rgba(150, 150, 150, 0.4);
+  }
+  66.6667%{
+    background: rgba(150, 150, 150, 1);
+  }
+  100%{
+    background: rgba(150, 150, 150, 0.4);
+  }
+}
+
+@keyframes cycleThree{
+  0%{
+    background: rgba(150, 150, 150, 0.4);
+  }
+  33.333%{
+    background: rgba(150, 150, 150, 0.4);
+  }
+  66.6667%{
+    background: rgba(150, 150, 150, 0.4);
+  }
+  100%{
+    background: rgba(150, 150, 150, 1);
+  }
+}

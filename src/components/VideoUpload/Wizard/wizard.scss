@@ -1,0 +1,88 @@
+$wizard-height: var(--wizard-height);
+$wizard-width: var(--wizard-width);
+
+.wizard {
+  height: $wizard-height;
+  width: $wizard-width;
+  background-color: var(--primary-500);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .loadingbar {
+    position: absolute;
+    z-index: 1;
+    width: 0;
+    height: 3px;
+    top: 85px;
+    left: 0;
+    background: var(--color-success);
+    transition: all 3s ease-in;
+
+    &.active {
+      width: 100%;
+      transform: scaleX(1) translate3d(0, 0, 0);
+    }
+  }
+
+  .syncing,
+  .done {
+    position: absolute;
+    z-index: 200;
+    top: 34vh !important;
+    left: 39.5vw !important;
+    opacity: 0;
+
+    &.syncing {
+      height: 5em;
+      animation: syncing 3.2s ease-in-out;
+      animation-fill-mode: forwards;
+    }
+
+    &.done {
+      color: var(--color-success);
+      animation: done 0.5s ease-in 3.2s forwards;
+      border-radius: 50%;
+      padding: 25px;
+      box-shadow: 0 2px 0 0 var(--color-successoffset), 0 2px 10px 0 var(--color-success);
+      background: linear-gradient(145deg, var(--primary-600), transparent);
+      transition: all 0.3s ease-in-out;
+      height: 7em;
+      left: 36.5vw !important;
+    }
+  }
+
+  button {
+    color: var(--text-color);
+    border-radius: 1px;
+  }
+}
+
+@keyframes syncing {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes done {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+

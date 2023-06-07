@@ -1,0 +1,131 @@
+.videos__page {
+	/* min-height: 93%; */
+	/* background: var(--primary-500); */
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+  
+.videos__page .video-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 420px);
+}
+
+/* Video Card */
+
+/* flexing the grid item will ensure the card stretchs to meet the specified grid width */
+.videos__page .video {
+	display: flex;
+}
+
+.videos__page .video:hover {
+	display: flex;
+}
+
+.videos__page .card:hover {
+	transform: translateY(0);
+	transition: all 0.3s;
+	transform: translateY(-2px);
+	cursor: pointer;
+}
+
+.videos__page .thumbnail {
+	margin: 0;
+}
+
+.videos__page .info {
+	padding: 1em;
+	background: var(--primary-600);
+	border-radius: 0 0 8px 8px; 
+}
+  
+/* Overriding react-player's default styles */
+.video .thumbnail a div {
+	width: 400px !important;
+	height: 195px !important;
+}
+
+.video .thumbnail a div video {
+	height: fit-content !important; 
+	border-radius: 8px 8px 0 0; 
+}
+
+.video .thumbnail.loading {
+	position: relative;
+  }
+  
+.video .thumbnail.loading::before {
+	content: "";
+	position: absolute;
+	width: 400px;
+	height: fit-content !important; 
+	height: 195px !important;
+	top: 0;
+	left: 0;
+	background-color: var(--primary-500);
+	animation: pulse 1.5s ease-in-out infinite;
+	border-radius: 4px;
+}
+  
+  @keyframes pulse {
+	0% {
+	  opacity: 1;
+	}
+	50% {
+	  opacity: 0.6;
+	}
+	100% {
+	  opacity: 1;
+	}
+  }
+  
+
+@media (max-width: 1476px) {
+	.videos__page .video-grid {
+	  grid-template-columns: repeat(3, 420px);
+	}
+
+	.video .thumbnail a div {
+		width: 370px !important;
+	}
+}
+
+@media (max-width: 1390px) {
+	.videos__page .video-grid {
+	  grid-template-columns: repeat(3, 400px);
+	}
+
+	.video .thumbnail a div {
+		width: 370px !important;
+	}
+}
+
+@media (max-width: 900px) {
+	.videos__page .video-grid {
+	  grid-template-columns: 1fr;
+	}
+
+}
+
+@media (max-width: 600px) {
+	.videos__page {
+		width: 100vw;
+	}
+
+	.videos__page .video-grid {
+	  grid-template-columns: 1fr;
+	  width: 100%;
+	}
+
+	.videos__page .video {
+		border-radius: 0;
+	}
+
+	.videos__page .info {
+		padding: 1em;
+		background: var(--primary-600);
+		border-radius: 0; 
+	}
+}
+  
+  

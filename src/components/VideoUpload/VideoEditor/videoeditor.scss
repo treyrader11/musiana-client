@@ -1,0 +1,47 @@
+.video__editor {
+	font-size: 1.2rem;
+  
+	button {
+		color: var(--text-color);
+		border-radius: 1px;
+	}
+  
+	.footer {
+		position: absolute;
+		bottom: 0;
+		min-width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 1rem 1em;
+		border-top: solid 2px var(--primary-600);
+		background: var(--primary-500);
+  
+		.icon-group,
+		.btn-group {
+			display: flex;
+			gap: 10px;
+		}
+	
+		.icon-group p {
+			color: var(--color-success);
+			margin-top: 5px;
+		}
+	
+		.btn-group .btn {
+			padding: 9px 20px;
+			font-size: 1.4rem;
+			background-color: var(--primary-400);
+		}
+	
+		.btn.back-btn {
+			margin-right: -20px;
+			background-color: transparent;
+		}
+	
+		.icon-group .icon {
+			height: 30px;
+		}
+	}
+}
+  
