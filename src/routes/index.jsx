@@ -10,6 +10,7 @@ import ProgressBar from "react-topbar-progress-indicator";
 
 const Home = lazy(() => import("../pages/Home/Home"));
 const SinglePost = lazy(() => import("../pages/Singlepost/SinglePost"));
+const Verify = lazy(() => import("../pages/Auth/Verify"));
 const Profile = lazy(() => import("../pages/Profile/Profile"));
 const Videos = lazy(() => import("../pages/Video/Videos"));
 const Video = lazy(() => import("../pages/Video/Video"));
@@ -52,6 +53,7 @@ const Router = () => {
 			<Route path="/" element={<Layout />}>
 				<Route index element={<Home />} />
 				<Route path="/post/:id" element={<SinglePost />} />
+				<Route path="/verify/:verificationToken" element={<Verify />} />
 				<Route path="/user/:id" element={<Profile />} />
 				<Route path="/videos" element={<Videos type="all" />} />
 				<Route path="/video/:id" element={<Video />} />
