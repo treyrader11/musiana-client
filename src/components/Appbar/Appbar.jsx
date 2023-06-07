@@ -84,9 +84,12 @@ const Appbar = () => {
 				<img src={isSidebarVisible ? closeIcon : hamburger} alt="hamburger" />
 			</div>
 			<Link to="/">
-				<Tooltip position="bottom" text="Go home">
+				{/* <Tooltip position="bottom" text="Go home">
 					<img src={homeIcon} alt="home" className="home-icon" />
-				</Tooltip>
+				</Tooltip> */}
+				<img width="64" height="64" src="https://img.icons8.com/dotty/80/84A401/circled-m.png" alt="circled-m"/>
+				{/* <img width="64" height="64" src="https://img.icons8.com/sf-black-filled/64/84A401/m.png" alt="m"/>  */}
+
 			</Link>
 			<form onSubmit={searchHandler} className="searchform">
 				<button type="submit" aria-label="search">
