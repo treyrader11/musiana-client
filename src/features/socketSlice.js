@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { logout } from "./userSlice";
+import { logout } from "./authSlice";
 
 const initialState = {
 	socket: null,

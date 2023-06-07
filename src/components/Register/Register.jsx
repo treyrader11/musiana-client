@@ -1,32 +1,45 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { RESET, sendVerificationEmail } from "../../features/emailSlice";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+// import { RESET, sendVerificationEmail } from "../../features/emailSlice";
+import { RESET, selectCurrentUser } from "../../features/authSlice";
 import { setIsLoading } from "../../features/modalSlice";
-import { login } from "../../features/userSlice";
+import { register, login } from "../../features/authSlice";
 import useFetch from "../../hooks/useFetch";
 import { registerService } from "../../services/authServices";
 import DataList from "../DataList/DataList";
+import { useNavigate } from "react-router-dom";
 
-const initialForm = { name: "", password: "", email: "", dob: "" };
+const initialForm = { name: "", password: "", email: "", };
 
 const Register = ({ setIsRegistering }) => {
 	const [form, setForm] = useState(initialForm);
 	const dispatch = useDispatch();
 	const customFetch = useFetch();
 
+	const navigate = useNavigate();
+	const currentUser = useSelector(selectCurrentUser);
+
+	console.log('currentUser', currentUser);
+
 	const registerHandler = async e => {
 		e.preventDefault();
 		dispatch(setIsLoading(true));
-		const data = await customFetch(registerService, form);
+		//const data = await customFetch(registerService, form);
+		await dispatch(register(form))
 		// if (data) dispatch(sendVerificationEmail());
-		if (data) dispatch(login(data));
-		await dispatch(sendVerificationEmail());
+		//if (data) dispatch(login(data));
+		//await dispatch(sendVerificationEmail());
 		dispatch(setIsLoading(false));
 	};
 
 	const updateForm = (key, e) => {
 		setForm(form => ({ ...form, [key]: e.target.value }));
 	};
+
+	useEffect(() => {
+        currentUser && navigate('/')
+        dispatch(RESET());
+    }, [currentUser, dispatch]);
 
 	return (
 		<form onSubmit={registerHandler} className="register">

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createChatService, fetchChatsService, fetchMessagesService } from "../services/messageServices";
-import { logout } from "./userSlice";
+import { logout } from "./authSlice";
 
 const initialState = {
 	conversationID: "",

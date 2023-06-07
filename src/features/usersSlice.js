@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchUsersService } from "../services/userServices";
 import { getAllChats } from "./messageSlice";
-import { logout } from "./userSlice";
+import { logout } from "./authSlice";
 
 const initialState = {
 	users: [],

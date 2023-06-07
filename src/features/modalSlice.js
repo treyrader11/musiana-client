@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { logout } from "./userSlice";
+import { logout } from "./authSlice";
 
 const initialState = {
 	modals: [],

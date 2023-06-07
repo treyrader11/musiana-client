@@ -6,7 +6,7 @@ import useFetch from "./hooks/useFetch.js";
 import SERVER_URI from "./serverUri";
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "./features/userSlice.js";
+import { getLoginStatus, getUser, login, selectCurrentUser } from "./features/authSlice.js";
 import { setSocket } from "./features/socketSlice";
 import { showModal } from "./features/modalSlice.js";
 import { addMessages, clearMessage, deleteChat, updateChats } from "./features/messageSlice.js";
@@ -26,28 +26,41 @@ function App() {
 	const customFetch = useFetch();
 	const [theme, setTheme] = useState("dark");
 	const {
-		user: { id, isGuest },
+		auth: { currentUser, isGuest, isLoggedIn },
+		//user: { id, isGuest },
 		modal: { isLoading, isSidebarVisible },
 		socket: { socket },
 		message: { to, conversationID },
 	} = useSelector(state => state);
 
+	//const currentUser = useSelector(selectCurrentUser);
+
 	//login
+	// useEffect(() => {
+	// 	const user = Cookies.get("user");
+	// 	if (user) dispatch(login(JSON.parse(user)));
+	// 	else dispatch(login({ id: "guest", isGuest: true }));
+	// }, [dispatch]);
+
 	useEffect(() => {
-		const user = Cookies.get("user");
-		if (user) dispatch(login(JSON.parse(user)));
-		else dispatch(login({ id: "guest", isGuest: true }));
-	}, [dispatch]);
+		const fetchUser = async ({ _id }) => {
+			dispatch(getUser(_id));
+		}
+		if (currentUser) fetchUser(currentUser);
+
+		if (isLoggedIn && currentUser === null) dispatch(getUser());
+		dispatch(getLoginStatus());
+	}, [dispatch, isLoggedIn, currentUser]);
 
 	//get users and chats and init socket
 	useEffect(() => {
-		if (id) {
-			const query = `id=${id}`;
+		if (currentUser) {
+			const query = `id=${currentUser?._id}`;
 			dispatch(getUsers({ customFetch }));
 			dispatch(setPosts({ customFetch }));
 			if (!isGuest) dispatch(setSocket(io(SERVER_URI, { query })));
 		}
-	}, [id, customFetch, dispatch, isGuest]);
+	}, [currentUser, customFetch, dispatch, isGuest]);
 
 	//socket events
 	useEffect(() => {
@@ -77,7 +90,7 @@ function App() {
 				</div>
 				<ThemeSwitch setTheme={setTheme} />
 				<Modal />
-				{id ? <Router /> : <Auth />}
+				{currentUser?._id ? <Router /> : <Auth />}
 			</div>
 			<Backdrop show={isLoading}>
 				<Loading />

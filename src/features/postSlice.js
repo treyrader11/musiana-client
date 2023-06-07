@@ -10,8 +10,9 @@ import {
 	replyCommentService,
 	updatePostService,
 } from "../services/postServices";
+import { logout } from "./authSlice";
 import { showModal } from "./modalSlice";
-import { logout, update } from "./userSlice";
+import { update } from "./userSlice";
 
 // const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
