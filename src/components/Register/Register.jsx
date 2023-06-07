@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 // import { RESET, sendVerificationEmail } from "../../features/emailSlice";
-import { RESET, selectCurrentUser } from "../../features/authSlice";
 import { setIsLoading } from "../../features/modalSlice";
-import { register, login } from "../../features/authSlice";
+import { login } from "../../features/userSlice";
 import useFetch from "../../hooks/useFetch";
 import { registerService } from "../../services/authServices";
 import DataList from "../DataList/DataList";
@@ -15,31 +14,20 @@ const Register = ({ setIsRegistering }) => {
 	const [form, setForm] = useState(initialForm);
 	const dispatch = useDispatch();
 	const customFetch = useFetch();
-
-	const navigate = useNavigate();
-	const currentUser = useSelector(selectCurrentUser);
-
-	console.log('currentUser', currentUser);
+	//const navigate = useNavigate();
 
 	const registerHandler = async e => {
 		e.preventDefault();
 		dispatch(setIsLoading(true));
-		//const data = await customFetch(registerService, form);
-		await dispatch(register(form))
+		const data = await customFetch(registerService, form);
 		// if (data) dispatch(sendVerificationEmail());
-		//if (data) dispatch(login(data));
-		//await dispatch(sendVerificationEmail());
+		if (data) dispatch(login(data));
 		dispatch(setIsLoading(false));
 	};
 
 	const updateForm = (key, e) => {
 		setForm(form => ({ ...form, [key]: e.target.value }));
 	};
-
-	useEffect(() => {
-        currentUser && navigate('/')
-        dispatch(RESET());
-    }, [currentUser, dispatch]);
 
 	return (
 		<form onSubmit={registerHandler} className="register">
@@ -64,8 +52,6 @@ const Register = ({ setIsRegistering }) => {
 				required
 				onChange={e => updateForm("name", e)}
 			/>
-			{/* <label htmlFor="dob">Date of birth</label>
-			<input type="date" id="dob" required value={form.dob} onChange={e => updateForm("dob", e)} /> */}
 			<label htmlFor="password">Password</label>
 			<input
 				type="password"

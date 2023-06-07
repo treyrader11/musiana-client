@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login, loginWithGoogle } from "../../features/authSlice";
+import { loginWithGoogle } from "../../features/authSlice";
 import useFetch from "../../hooks/useFetch";
 import { setIsLoading, showModal } from "../../features/modalSlice";
 import { loginService } from "../../services/authServices";
 import DataList from "../DataList/DataList";
 import { GoogleLogin } from "@react-oauth/google";
-
+import { login } from "../../features/userSlice";
 
 const Login = ({ setIsRegistering }) => {
 	const [email, setEmail] = useState("");
@@ -16,25 +16,23 @@ const Login = ({ setIsRegistering }) => {
 
 	const loginHandler = async e => {
 		e.preventDefault();
-		await dispatch(login({ email, password }));
-		//dispatch(setIsLoading(true));
-		//const data = await customFetch(loginService, { email, password });
-		// if (data) dispatch(login(data));
-		//dispatch(setIsLoading(false));
+		dispatch(setIsLoading(true));
+		const data = await customFetch(loginService, { email, password });
+		if (data) dispatch(login(data));
+		dispatch(setIsLoading(false));
 	};
 
 	const guestHandler = () => {
 		dispatch(login({ id: "guest", isGuest: true }));
 	};
 
-	const googleLogin = async credentialResponse => {
-		// dispatch(setIsLoading(true));
+	const googleLogin = async ({ credential }) => {
+		dispatch(setIsLoading(true));
         const { payload } = await dispatch(
-          loginWithGoogle({ userToken: credentialResponse.credential })
+          loginWithGoogle({ userToken: credential })
         ); 
 		if (payload) dispatch(login(payload));
-		// dispatch(setIsLoading(false));
-		// dispatch(showModal({ msg: "Thank fuggin goodness" }));
+		dispatch(setIsLoading(false));
     };
 
 	return (

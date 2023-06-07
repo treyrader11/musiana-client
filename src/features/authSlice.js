@@ -1,19 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
+import axiosConfig from "../services/axiosConfig";
 import { 
   registerService, 
-  getLoginStatusService,
-  getUserService, 
+  // getLoginStatusService,
+  // getUserService, 
   sendVerificationEmailService, 
   verifyUserService, 
   loginService,
-  logoutService,
+  // logoutService,
   loginWithGoogleService,
 } from "../services/authServices";
 
 const initialState = {
     isLoggedIn: false,
     currentUser: null,
-    isGuest: "",
+    isGuest: true,
     users: [],
     twoFactor: false,
     isError: false,
@@ -37,30 +39,30 @@ export const register = createAsyncThunk(
 );
 
 // Get Login status
-export const getLoginStatus = createAsyncThunk(
-  "auth/getLoginStatus",
-  async (_, thunkAPI) => {
-      try {
-          return await getLoginStatusService();
-      } catch (error) {
-          const message = (error.response && error.response.data && error.response.data.message ) || error.message || error.toString();
-          return thunkAPI.rejectWithValue(message);
-      }
-  }
-);
+// export const getLoginStatus = createAsyncThunk(
+//   "auth/getLoginStatus",
+//   async (_, thunkAPI) => {
+//       try {
+//           return await getLoginStatusService();
+//       } catch (error) {
+//           const message = (error.response && error.response.data && error.response.data.message ) || error.message || error.toString();
+//           return thunkAPI.rejectWithValue(message);
+//       }
+//   }
+// );
 
   // Get Current User
-export const getUser = createAsyncThunk(
-  "auth/getUser",
-  async (userId, thunkAPI) => {
-    try {
-      return await getUserService(userId);
-    } catch (error) {
-        const message = (error.response && error.response.data && error.response.data.message ) || error.message || error.toString();
-        return thunkAPI.rejectWithValue(message);
-      }
-  }
-);
+// export const getUser = createAsyncThunk(
+//   "auth/getUser",
+//   async (userId, thunkAPI) => {
+//     try {
+//       return await getUserService(userId);
+//     } catch (error) {
+//         const message = (error.response && error.response.data && error.response.data.message ) || error.message || error.toString();
+//         return thunkAPI.rejectWithValue(message);
+//       }
+//   }
+// );
 
  // Send verification email
 export const sendVerificationEmail = createAsyncThunk(
@@ -112,17 +114,17 @@ export const login = createAsyncThunk(
 );
 
 // Logout User
-export const logout = createAsyncThunk(
-  "auth/logout",
-  async (_, thunkAPI) => {
-      try {
-          return await logoutService();
-      } catch (error) {
-          const message = (error.response && error.response.data && error.response.data.message ) || error.message || error.toString();
-          return thunkAPI.rejectWithValue(message);
-      }
-  }
-);
+// export const logout = createAsyncThunk(
+//   "auth/logout",
+//   async (_, thunkAPI) => {
+//       try {
+//           return await logoutService();
+//       } catch (error) {
+//           const message = (error.response && error.response.data && error.response.data.message ) || error.message || error.toString();
+//           return thunkAPI.rejectWithValue(message);
+//       }
+//   }
+// );
 
 export const loginWithGoogle = createAsyncThunk(
   "auth/loginWithGoogle",
@@ -164,51 +166,27 @@ export const loginWithGoogle = createAsyncThunk(
 //     }
 // );
 
+let interceptor;
+
 const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        RESET(state) {
+        RESET: state => {
             state.twoFactor = false;
             state.isError = false;
             state.isSuccess = false;
             state.isLoading = false;
             state.message = "";
         },
+        logout: state => {
+          Cookies.remove("user");
+          axiosConfig.interceptors.request.eject(interceptor);
+          return initialState;
+        },
     },
     extraReducers: (builder) => {
         builder
-          // Register User
-          .addCase(register.pending, (state) => {
-            state.isLoading = true;
-          })
-          .addCase(register.fulfilled, (state, action) => {
-              state.isLoading = false;
-              state.isSuccess = true;
-              state.currentUser = action.payload;
-              console.log('currentUser:', action.payload)
-          })
-          .addCase(register.rejected, (state, action) => {
-              state.isLoading = false;
-              state.isError = true;
-              state.message = action.payload;
-              console.log(action.payload);
-          })
-          // Get Login status
-          .addCase(getLoginStatus.pending, (state) => {
-            state.isLoading = true;
-          })
-          .addCase(getLoginStatus.fulfilled, (state, action) => {
-              state.isLoading = false;
-              state.isSuccess = true;
-              state.isLoggedIn = action.payload;
-              console.log('action.payload', action.payload)
-          })
-          .addCase(getLoginStatus.rejected, (state, action) => {
-              state.isLoading = false;
-              state.isError = true;
-              state.message = action.payload;
-          })
             // Send Verification Email
             .addCase(sendVerificationEmail.pending, (state) => {
                 state.isLoading = true;
@@ -246,26 +224,33 @@ const authSlice = createSlice({
                 console.log(payload.message);
             })
             // Login User
-            .addCase(login.pending, (state) => {
-              state.isLoading = true;
-            })
-            .addCase(login.fulfilled, (state, { payload }) => {
-                state.isLoading = false;
-                state.isSuccess = true;
-                state.isLoggedIn = true;
-                state.currentUser = payload;
-                console.log('payload', payload);
-                //state.currentAdmin = payload.role === 'admin' ? payload : null;
-            })
-            .addCase(login.rejected, (state, { payload }) => {
-                state.isLoading = false;
-                state.isError = true;
-                state.message = payload;
-                state.currentUser = null;
-                if (payload.includes('New browser')) {
-                    state.twoFactor = true;
-                }
-            })
+            // .addCase(login.pending, (state) => {
+            //   state.isLoading = true;
+            // })
+            // .addCase(login.fulfilled, (state, { payload }) => {
+            //     state.isLoading = false;
+            //     state.isSuccess = true;
+            //     state.isLoggedIn = true;
+            //     state.currentUser = payload;
+            //     console.log('payload', payload);
+            //     Cookies.set("user", JSON.stringify(payload), { expires: 30 });
+            //     interceptor = axiosConfig.interceptors.request.use(
+            //       config => {
+            //         config.headers["Authorization"] = `Bearer ${token}`;
+            //         return config;
+            //       },
+            //       error => Promise.reject(error)
+            //     );
+            // })
+            // .addCase(login.rejected, (state, { payload }) => {
+            //     state.isLoading = false;
+            //     state.isError = true;
+            //     state.message = payload;
+            //     state.currentUser = null;
+            //     if (payload.includes('New browser')) {
+            //         state.twoFactor = true;
+            //     }
+            // })
             // Send login code
             // .addCase(sendLoginCode.pending, (state) => {
             //     state.isLoading = true;
@@ -304,7 +289,7 @@ const authSlice = createSlice({
     }
 });
 
-export const { RESET } = authSlice.actions;
+export const { RESET, logout } = authSlice.actions;
 
 export const selectCurrentUser = state => state.auth.currentUser;
 

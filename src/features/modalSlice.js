@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { logout } from "./authSlice";
+import { logout } from "./userSlice";
 
 const initialState = {
 	modals: [],
@@ -9,7 +9,7 @@ const initialState = {
 
 export const showModal = createAsyncThunk("modal/show", async (props, thunkAPI) => {
 	const { fulfillWithValue, dispatch } = thunkAPI;
-	const msg = props.msg || "Hold on I swear it won't take so long";
+	//const msg = props.msg || "Hold on I swear it won't take so long";
 	const id = new Date().getTime();
 	const modal = { msg, id };
 	setTimeout(() => {
@@ -32,13 +32,14 @@ const modalSlice = createSlice({
 			state.isLoading = action.payload;
 		},
 	},
-	extraReducers: {
-		[showModal.fulfilled]: (state, action) => {
-			state.modals.push(action.payload);
-		},
-		[logout.type]: (state, action) => {
-			return initialState;
-		},
+	extraReducers: builder => {
+		builder
+			.addCase(showModal.fulfilled, (state, action) => {
+				state.modals.push(action.payload);
+			})
+			.addCase(logout.type, (state, action) => {
+				return initialState;
+			});
 	},
 });
 

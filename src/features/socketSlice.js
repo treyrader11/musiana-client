@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { logout } from "./authSlice";
+import { logout } from "./userSlice";
 
 const initialState = {
 	socket: null,
@@ -13,10 +13,10 @@ const socketSlice = createSlice({
 			state.socket = action.payload;
 		},
 	},
-	extraReducers: {
-		[logout.type]: (state, action) => {
+	extraReducers: builder => {
+		builder.addCase(logout.type, (state, action) => {
 			return initialState;
-		},
+		});
 	},
 });
 
