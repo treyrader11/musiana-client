@@ -87,27 +87,28 @@ const messageSlice = createSlice({
 			if (action.payload === state.conversationID) state.conversationID = "";
 		},
 	},
-	extraReducers: {
-		[getAllChats.fulfilled]: (state, action) => {
-			const { users, chats } = action.payload;
-			const getUserDetails = members => users.find(user => members.includes(user._id));
-			state.chats = chats.map(chat => ({ ...chat, userDetails: getUserDetails(chat.members) }));
-		},
-		[updateChats.fulfilled]: (state, action) => {
-			const updatingChat = state.chats[action.payload?.index];
-			if (updatingChat) {
-				state.chats = [
-					{
-						...updatingChat,
-						lastMessage: action.payload.lastMessage,
-					},
-					...state.chats.filter(chat => chat._id !== updatingChat._id),
-				];
-			}
-		},
-		[logout.type]: (state, action) => {
-			return initialState;
-		},
+	extraReducers: builder => {
+		builder
+			.addCase(getAllChats.fulfilled, (state, action) => {
+				const { users, chats } = action.payload;
+				const getUserDetails = members => users.find(user => members.includes(user._id));
+				state.chats = chats.map(chat => ({ ...chat, userDetails: getUserDetails(chat.members) }));
+			})
+			.addCase(updateChats.fulfilled, (state, action) => {
+				const updatingChat = state.chats[action.payload?.index];
+				if (updatingChat) {
+					state.chats = [
+						{
+							...updatingChat,
+							lastMessage: action.payload.lastMessage,
+						},
+						...state.chats.filter(chat => chat._id !== updatingChat._id),
+					];
+				}
+			})
+			.addCase(logout.type, (state, action) => {
+				return initialState;
+			});
 	},
 });
 

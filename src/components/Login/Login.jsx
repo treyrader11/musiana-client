@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login, loginWithGoogle } from "../../features/userSlice";
+import { loginWithGoogle } from "../../features/authSlice";
 import useFetch from "../../hooks/useFetch";
 import { setIsLoading, showModal } from "../../features/modalSlice";
 import { loginService } from "../../services/authServices";
 import DataList from "../DataList/DataList";
 import { GoogleLogin } from "@react-oauth/google";
-
+import { login } from "../../features/userSlice";
 
 const Login = ({ setIsRegistering }) => {
 	const [email, setEmail] = useState("");
@@ -26,14 +26,13 @@ const Login = ({ setIsRegistering }) => {
 		dispatch(login({ id: "guest", isGuest: true }));
 	};
 
-	const googleLogin = async credentialResponse => {
+	const googleLogin = async ({ credential }) => {
 		dispatch(setIsLoading(true));
         const { payload } = await dispatch(
-          loginWithGoogle({ userToken: credentialResponse.credential })
+          loginWithGoogle({ userToken: credential })
         ); 
 		if (payload) dispatch(login(payload));
 		dispatch(setIsLoading(false));
-		// dispatch(showModal({ msg: "Thank fuggin goodness" }));
     };
 
 	return (

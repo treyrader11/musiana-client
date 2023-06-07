@@ -1,11 +1,11 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-import { store } from './app/store';
-import { Provider } from 'react-redux';
+import React from "react"
+import ReactDOM from "react-dom/client"
+import App from "./App.jsx"
+import "./index.css"
+import { store } from "./app/store";
+import { Provider } from "react-redux";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 
 axios.defaults.withCredentials = true;

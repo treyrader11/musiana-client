@@ -26,13 +26,14 @@ const usersSlice = createSlice({
 			state.usersOnline = action.payload;
 		},
 	},
-	extraReducers: {
-		[getUsers.fulfilled]: (state, action) => {
-			state.users = action.payload;
-		},
-		[logout.type]: (state, action) => {
-			return initialState;
-		},
+	extraReducers: builder => {
+		builder
+			.addCase(getUsers.fulfilled, (state, action) => {
+				state.users = action.payload;
+		  	})
+		  	.addCase(logout.type, (state, action) => {
+				return initialState;
+		  	});
 	},
 });
 

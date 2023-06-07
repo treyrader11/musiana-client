@@ -1,4 +1,3 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
 	commentPostService,
 	createPostService,
@@ -12,8 +11,7 @@ import {
 } from "../services/postServices";
 import { showModal } from "./modalSlice";
 import { logout, update } from "./userSlice";
-
-// const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
 	allPosts: { posts: [], page: 0, isLoading: false },
@@ -168,79 +166,78 @@ const postSlice = createSlice({
 			state.editingPost = action.payload;
 		},
 	},
-	extraReducers: {
-		[addPost.fulfilled]: (state, action) => {
-			state.allPosts.posts.pop();
-			state.userPosts.posts.pop();
-			state.allPosts.posts.unshift(action.payload);
-			state.userPosts.posts.unshift(action.payload);
-		},
-		[deletePost.fulfilled]: (state, action) => {
-			state.allPosts.posts = state.allPosts.posts.filter(post => post._id !== action.payload);
-			state.userPosts.posts = state.userPosts.posts.filter(post => post._id !== action.payload);
-		},
-		[likePost.fulfilled]: (state, { payload }) => {
-			const { singlePost, allPosts, userPosts } = state;
-			const { id, userId, add } = payload;
-			if (singlePost._id === id) {
-				add
-					? singlePost.likes.push(userId)
-					: (singlePost.likes = singlePost.likes.filter(ele => ele !== userId));
-			}
-			let post = allPosts.posts.find(post => post._id === id);
-			let _post = userPosts.posts.find(post => post._id === id);
-			if (add) {
-				post?.likes.push(userId);
-				_post?.likes.push(userId);
-			} else {
-				post && (post.likes = post.likes.filter(ele => ele !== userId));
-				_post && (_post.likes = _post.likes.filter(ele => ele !== userId));
-			}
-		},
-		[update.type]: (state, action) => {
-			const { name, profileImage, id } = action.payload;
-			state.allPosts.posts = state.allPosts.posts.map(post => {
-				if (post.createdBy === id) {
-					const updatedName = name || post.userDetails.name;
-					const updatedImage = profileImage || post.userDetails.image;
-					return {
-						...post,
-						userDetails: { name: updatedName, image: updatedImage },
-					};
+	extraReducers: builder => {
+		builder
+			.addCase(addPost.fulfilled, (state, action) => {
+				state.allPosts.posts.pop();
+				state.userPosts.posts.pop();
+				state.allPosts.posts.unshift(action.payload);
+				state.userPosts.posts.unshift(action.payload);
+			})
+			.addCase(deletePost.fulfilled, (state, action) => {
+				state.allPosts.posts = state.allPosts.posts.filter(post => post._id !== action.payload);
+				state.userPosts.posts = state.userPosts.posts.filter(post => post._id !== action.payload);
+			})
+			.addCase(likePost.fulfilled, (state, { payload }) => {
+				const { singlePost, allPosts, userPosts } = state;
+				const { id, userId, add } = payload;
+				if (singlePost._id === id) {
+					add
+						? singlePost.likes.push(userId)
+						: (singlePost.likes = singlePost.likes.filter(ele => ele !== userId));
 				}
-				return post;
-			});
-			state.userPosts.posts = state.userPosts.posts.map(post => {
-				if (post.createdBy === id) {
-					const updatedName = name || post.userDetails.name;
-					const updatedImage = profileImage || post.userDetails.image;
-					return {
-						...post,
-						userDetails: { name: updatedName, image: updatedImage },
-					};
+				let post = allPosts.posts.find(post => post._id === id);
+				let _post = userPosts.posts.find(post => post._id === id);
+				if (add) {
+					post?.likes.push(userId);
+					_post?.likes.push(userId);
+				} else {
+					post && (post.likes = post.likes.filter(ele => ele !== userId));
+					_post && (_post.likes = _post.likes.filter(ele => ele !== userId));
 				}
-				return post;
+			})
+			.addCase(update.type, (state, action) => {
+				const { name, profileImage, id } = action.payload;
+				state.allPosts.posts = state.allPosts.posts.map(post => {
+					if (post.createdBy === id) {
+						const updatedName = name || post.userDetails.name;
+						const updatedImage = profileImage || post.userDetails.image;
+						return {
+							...post,
+							userDetails: { name: updatedName, image: updatedImage },
+						};
+					}
+					return post;
+				});
+				state.userPosts.posts = state.userPosts.posts.map(post => {
+					if (post.createdBy === id) {
+						const updatedName = name || post.userDetails.name;
+						const updatedImage = profileImage || post.userDetails.image;
+						return {
+							...post,
+							userDetails: { name: updatedName, image: updatedImage },
+						};
+					}
+					return post;
+				});
+			})
+			.addCase(deleteComment.fulfilled, (state, action) => {
+				const { post } = action.payload;
+				state.singlePost = post;
+				state.allPosts.posts = state.allPosts.posts.map(_post => (_post._id === post._id ? post : _post));
+			})
+			.addCase(editComment.fulfilled, (state, action) => {
+				const { post } = action.payload;
+				state.singlePost = post;
+			})
+			.addCase(replyComment.fulfilled, (state, action) => {
+				const { post } = action.payload;
+				state.singlePost = post;
+			})
+			.addCase(logout.type, () => initialState)
+			.addCase(setPosts.pending, state => {
+				state.allPosts.isLoading = true;
 			});
-		},
-		[deleteComment.fulfilled]: (state, action) => {
-			const { post } = action.payload;
-			state.singlePost = post;
-			state.allPosts.posts = state.allPosts.posts.map(_post => (_post._id === post._id ? post : _post));
-		},
-		[editComment.fulfilled]: (state, action) => {
-			const { post } = action.payload;
-			state.singlePost = post;
-		},
-		[replyComment.fulfilled]: (state, action) => {
-			const { post } = action.payload;
-			state.singlePost = post;
-		},
-		[logout.type]: (state, action) => {
-			return initialState;
-		},
-		[setPosts.pending]: state => {
-			state.allPosts.isLoading = true;
-		},
 	},
 });
 
