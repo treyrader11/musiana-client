@@ -9,7 +9,7 @@ const initialState = {
 
 export const showModal = createAsyncThunk("modal/show", async (props, thunkAPI) => {
 	const { fulfillWithValue, dispatch } = thunkAPI;
-	//const msg = props.msg || "Hold on I swear it won't take so long";
+	const msg = props.msg || "Hold on I swear it won't take so long";
 	const id = new Date().getTime();
 	const modal = { msg, id };
 	setTimeout(() => {

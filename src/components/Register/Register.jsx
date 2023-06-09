@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { RESET, sendVerificationEmail } from "../../features/emailSlice";
 import { setIsLoading } from "../../features/modalSlice";
-import { login } from "../../features/userSlice";
+import { login, sendVerificationEmail } from "../../features/userSlice";
 import useFetch from "../../hooks/useFetch";
 import { registerService } from "../../services/authServices";
 import DataList from "../DataList/DataList";
@@ -20,8 +19,12 @@ const Register = ({ setIsRegistering }) => {
 		e.preventDefault();
 		dispatch(setIsLoading(true));
 		const data = await customFetch(registerService, form);
-		// if (data) dispatch(sendVerificationEmail());
-		if (data) dispatch(login(data));
+		if (data) dispatch(sendVerificationEmail(data.id));
+		// if (data) {
+		// 	console.log('data', data);
+		// 	// dispatch(sendVerificationEmail());
+		// 	dispatch(login(data));
+		// }
 		dispatch(setIsLoading(false));
 	};
 
