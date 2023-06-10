@@ -5,7 +5,7 @@ import { setIsLoading, showModal } from "../../features/modalSlice";
 import { loginService, loginWithGoogleService } from "../../services/authServices";
 import DataList from "../DataList/DataList";
 import { GoogleLogin } from "@react-oauth/google";
-import { login } from "../../features/userSlice";
+import { login, loginWithGoogle } from "../../features/userSlice";
 
 const Login = ({ setIsRegistering }) => {
 	const [email, setEmail] = useState("");
@@ -27,8 +27,9 @@ const Login = ({ setIsRegistering }) => {
 
 	const googleLogin = async ({ credential }) => {
 		dispatch(setIsLoading(true));
-		const data = await customFetch(loginWithGoogleService, ({ userToken: credential }));
-		if (data) dispatch(login(data));
+		const data = await customFetch(loginWithGoogleService, { userToken: credential });
+		console.log('data', data);
+		if (data) dispatch(loginWithGoogle(data));
 		dispatch(setIsLoading(false));
     };
 

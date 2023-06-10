@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setIsLoading } from "../../features/modalSlice";
+import { setIsLoading, showModal } from "../../features/modalSlice";
 import { login, sendVerificationEmail } from "../../features/userSlice";
 import useFetch from "../../hooks/useFetch";
 import { registerService } from "../../services/authServices";
 import DataList from "../DataList/DataList";
-import { useNavigate } from "react-router-dom";
 
 const initialForm = { name: "", password: "", email: "", };
 
@@ -13,18 +12,17 @@ const Register = ({ setIsRegistering }) => {
 	const [form, setForm] = useState(initialForm);
 	const dispatch = useDispatch();
 	const customFetch = useFetch();
-	//const navigate = useNavigate();
 
 	const registerHandler = async e => {
 		e.preventDefault();
 		dispatch(setIsLoading(true));
 		const data = await customFetch(registerService, form);
-		if (data) dispatch(sendVerificationEmail(data.id));
-		// if (data) {
-		// 	console.log('data', data);
-		// 	// dispatch(sendVerificationEmail());
-		// 	dispatch(login(data));
-		// }
+		if (data) {
+			console.log('data', data);
+			dispatch(sendVerificationEmail({ customFetch, userId: data.id }));
+			dispatch(showModal({ msg: "Please check your email for a verification link."}));
+			dispatch(login(data));
+		}
 		dispatch(setIsLoading(false));
 	};
 

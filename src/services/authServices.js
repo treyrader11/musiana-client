@@ -16,16 +16,17 @@ const loginService = async (formData = {}) => {
 const loginWithGoogleService = async (userToken) => {
 	const { data } = await axiosConfig.post("/auth/google/callback", userToken);
 	return data;
+	//return data.msg;
 };
 
-const sendVerificationEmailService = async () => {
-	const { data } = await axiosConfig.post("/auth/sendVerificationEmail");
-	console.log('data', data);
+const sendVerificationEmailService = async (email) => {
+	const { data } = await axiosConfig.post("/auth/sendVerificationEmail", email);
 	return data;
 };
 
 const verifyUserService = async (verificationToken) => {
 	const { data } = await axiosConfig.patch(`/auth/verifyUser/${verificationToken}`);
+	console.log('data', data);
 	return data;
  };
 
