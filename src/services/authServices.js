@@ -28,7 +28,17 @@ const verifyUserService = async (verificationToken) => {
 	const { data } = await axiosConfig.patch(`/auth/verifyUser/${verificationToken}`);
 	console.log('data', data);
 	return data;
- };
+};
+
+const forgotPasswordService = async (userData) => {
+	const { data } = await axiosConfig.post("/auth/forgotPassword", userData);
+	return data;
+};
+
+const changePasswordService = async (userData) => {
+	const { data } = await axiosConfig.patch("/auth/changePassword", userData);
+	return data;
+};
 
 export { 
 	registerService, 
@@ -36,4 +46,6 @@ export {
 	loginWithGoogleService, 
 	sendVerificationEmailService,
 	verifyUserService, 
+	forgotPasswordService,
+	changePasswordService,
 };

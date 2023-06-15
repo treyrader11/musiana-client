@@ -36,12 +36,6 @@ const emailSlice = createSlice({
             state.msg = "";
         },
     },
-    // extraReducers: {
-    //     [sendVerificationEmail.fulfilled]: (state, action) => {
-	// 		const { payload } = action;
-	// 		console.log('action.payload', payload);
-	// 	},
-    // }
     extraReducers: builder => {
         builder
         .addCase(sendAutomatedEmail.pending, (state) => {
@@ -58,23 +52,6 @@ const emailSlice = createSlice({
             state.emailSent = false;
             state.msg = action.payload;
         })
-        // Send Verification Email
-        // .addCase(sendVerificationEmail.pending, (state) => {
-        //     state.isLoading = true;
-        // })
-        // .addCase(sendVerificationEmail.fulfilled, (state, action) => {
-        //     // state.isLoading = false;
-        //     // state.isSuccess = true;
-        //     state.emailSent = true;
-        //     state.msg = action.payload;
-        //     console.log('action.payload', action.payload)
-        // })
-        // .addCase(sendVerificationEmail.rejected, (state, action) => {
-        //     state.isLoading = false;
-        //     state.isError = true;
-        //     state.msg = action.payload;
-        //     console.log('action.payload', action.payload)
-        // })
     }
 });
 

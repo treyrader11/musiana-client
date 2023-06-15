@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import { sendVerificationEmailService } from "../services/authServices";
+import { changePasswordService, sendVerificationEmailService } from "../services/authServices";
 import axiosConfig from "../services/axiosConfig";
 import { showModal } from "./modalSlice";
 
@@ -19,6 +19,21 @@ export const sendVerificationEmail = createAsyncThunk("auth/sendVerificationEmai
 	const { rejectWithValue } = thunkAPI;
 	const data = await customFetch(sendVerificationEmailService, { userId });
 	if (!data) return rejectWithValue();
+});
+
+// Change password 
+export const changePassword = createAsyncThunk("auth/changePassword", async (userData, thunkAPI) => {
+        try {
+            return await changePasswordService(userData);
+        } catch (error) {
+            const message =
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
+            return thunkAPI.rejectWithValue(message);
+        }
 });
 
 // export const verifyUser = createAsyncThunk("auth/verifyUser", async (props, thunkAPI) => {
@@ -63,8 +78,9 @@ const userSlice = createSlice({
 		},
 		verifyUser: (state, action) => {
 			const { isVerified } = action.payload;
+			state.isVerified = isVerified;
+			Cookies.set("user", JSON.stringify(state));
 			console.log('action.payload', action.payload);
-			// return state.isVerified = isVerified;
 		},
 		logout: state => {
 			Cookies.remove("user");
@@ -83,12 +99,6 @@ const userSlice = createSlice({
 				console.log('action.payload', action.payload);
 				//state.emailSent = action.payload;
 			})
-			// .addCase(verifyUser.fulfilled, (state, action) => {
-			// 	console.log('action.payload', action.payload);
-			// 	const { isVerified } = action.payload;
-				
-			// 	state.isVerified = isVerified;
-			// })
 	},
 });
 

@@ -18,10 +18,11 @@ const Register = ({ setIsRegistering }) => {
 		dispatch(setIsLoading(true));
 		const data = await customFetch(registerService, form);
 		if (data) {
+			dispatch(login(data));
 			console.log('data', data);
 			dispatch(sendVerificationEmail({ customFetch, userId: data.id }));
 			dispatch(showModal({ msg: "Please check your email for a verification link."}));
-			dispatch(login(data));
+			// dispatch(login(data));
 		}
 		dispatch(setIsLoading(false));
 	};
