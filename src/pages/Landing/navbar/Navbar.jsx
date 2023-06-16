@@ -1,4 +1,4 @@
-import "./header.scss";
+import "./navbar.scss";
 import { motion } from "framer-motion";
 import { IconContext } from "react-icons";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ const stagger = {
   },
 };
 
-const header = {
+const navbar = {
   initial: {
     y: -60,
     opacity: 0,
@@ -38,25 +38,22 @@ const navLinks = [
   { path: "/team", name: "TEAM" },
 ];
 
-const Header = () => {
+const Navbar = () => {
   const navigate = useNavigate();
   const goHome = () => navigate("/");
 
   return (
-    <motion.header variants={stagger}>
-      {/* <motion.icon className="icon">
-        <img src={icon} height="80" width="114" />
-      </motion.icon> */}
+    <motion.navbar variants={stagger}>
       <motion.div
         className="logo_wrapper icon"
-        variants={header}
+        variants={navbar}
         onClick={goHome}
       >
-        m<span>US</span>iana
+        M<span>US</span>iana
       </motion.div>
       <motion.div className="menu_container" variants={stagger}>
         {navLinks.map(({ path, name }, index) => (
-          <motion.span key={`${name}_${index}`} variants={header}>
+          <motion.span key={`${name}_${index}`} variants={navbar}>
             <NavLink to={path}>
               <IconContext.Provider
                 value={{
@@ -67,18 +64,17 @@ const Header = () => {
               >
                 {name}
               </IconContext.Provider>
-              {/* Need to read on IconContext.Provider */}
             </NavLink>
           </motion.span>
         ))}
-        <motion.span className="menu" variants={header}>
+        <motion.span className="menu" variants={navbar}>
           <span></span>
           <span></span>
           <span></span>
         </motion.span>
       </motion.div>
-    </motion.header>
+    </motion.navbar>
   );
 };
 
-export default Header;
+export default Navbar;

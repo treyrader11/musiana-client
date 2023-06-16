@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 //utilities
 import { io } from "socket.io-client";
 import Cookies from "js-cookie";
@@ -21,7 +21,7 @@ import { setPosts } from "./features/postSlice.js";
 import Modal from "./components/Modal/Modal.jsx";
 import Loading from "./components/Loading/Loading.jsx";
 import Backdrop from "./components/Backdrop/Backdrop.jsx";
-import ThemeSwitch from "./components/ThemeSwitch/ThemeSwitch.jsx";
+//import ThemeSwitch from "./components/ThemeSwitch/ThemeSwitch.jsx";
 import Router from "./routes";
 import Online from "./components/Online/Online.jsx";
 import Landing from "./pages/Landing/Landing.jsx";
@@ -29,7 +29,6 @@ import Landing from "./pages/Landing/Landing.jsx";
 function App() {
   const dispatch = useDispatch();
   const customFetch = useFetch();
-  const [theme, setTheme] = useState("dark");
   const {
     user: { id },
     modal: { isLoading, isSidebarVisible },
