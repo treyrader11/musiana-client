@@ -81,21 +81,18 @@ function App() {
   }, [customFetch, dispatch, socket, to, conversationID]);
 
   return (
-    <div className={"app " + theme}>
-      <div className="container">
-        <div className={isSidebarVisible ? "sidebar visible" : "sidebar"}>
-          <ThemeSwitch setTheme={setTheme} />
-          <Online />
-        </div>
-        <ThemeSwitch setTheme={setTheme} />
-        <Modal />
-        {/* {id !== "guest" && id ? <Router /> : <Landing />} */}
-        {id ? <Router /> : <Landing />}
+    <>
+      <div className={isSidebarVisible ? "sidebar visible" : "sidebar"}>
+        {/* <ThemeSwitch setTheme={setTheme} /> */}
+        <Online />
       </div>
+      <Modal />
+      {/* {id !== "guest" && id ? <Router /> : <Landing />} */}
+      {id ? <Router /> : <Landing />}
       <Backdrop show={isLoading}>
         <Loading />
       </Backdrop>
-    </div>
+    </>
   );
 }
 
