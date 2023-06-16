@@ -1,20 +1,32 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { verifyUser } from '../../features/authSlice';
+import { setIsLoading, showModal } from '../../features/modalSlice';
+import { login, verifyUser } from '../../features/userSlice';
+import useFetch from '../../hooks/useFetch';
+import { verifyUserService } from '../../services/authServices';
 
 const Verify = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const customFetch = useFetch();
   const { verificationToken } = useParams();
 
   //const { isLoading, currentUser } = useSelector(state => state.auth);
 
   const verifyAccount = async () => {
-    await dispatch(verifyUser(verificationToken));
-    //await dispatch(RESET_AUTH());
-    // await console.log('currentUser', currentUser)
-    await navigate('/');
+    dispatch(setIsLoading(true));
+    // if (verificationToken) {
+    //   dispatch(verifyUser({ customFetch, verificationToken }));
+    // }
+    //await dispatch(verifyUser());
+      const { isVerified, msg } = await customFetch(verifyUserService, verificationToken);
+      if (isVerified) {
+        dispatch(verifyUser({ isVerified }));
+        dispatch(showModal({ msg }));
+        navigate("/");
+      }
+    dispatch(setIsLoading(false));
   }; 
 
   // useEffect(() => {
@@ -28,7 +40,7 @@ const Verify = () => {
             <h2>Account Verification</h2>
             <p>To verify your account, click the button below...</p>
             <br />
-            <button onClick={verifyAccount} className="--btn">
+            <button onClick={verifyAccount} className="btn">
                 Verify Account
             </button>
         </div>

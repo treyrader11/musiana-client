@@ -129,7 +129,6 @@ export const videoSlice = createSlice({
         },
         setProgress: (state, action) => {
             state.progress = action.payload;
-            // console.log('progress', action.payload);
         },
         setUploading: (state, action) => {
             state.uploading = action.payload;
@@ -153,7 +152,6 @@ export const videoSlice = createSlice({
             .addCase(getVideos.pending, (state) => {
                 state.loading = true;
                 state.success = false;
-                console.log('pending', state);
             })
             .addCase(getVideos.fulfilled, (state, action) => {
                 state.loading = false;

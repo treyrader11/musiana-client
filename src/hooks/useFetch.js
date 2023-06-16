@@ -16,8 +16,6 @@ const useFetch = () => {
 				dispatch(showModal({ msg }));
 			}
 		},
-		//if I add navigate here, it will be re-rendered every time
-		//eslint-disable-next-line
 		[dispatch]
 	);
 };

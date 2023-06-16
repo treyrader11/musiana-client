@@ -15,7 +15,6 @@ import getDateString from "../../utils/getDateString";
 const ProfileCard = ({ id, isOwnProfile }) => {
 	const {
 		users: { users },
-		user: { isGuest },
 	} = useSelector(state => state);
 	const user = users.find(user => user._id === id) || {};
 	const [isEditing, setIsEditing] = useState(false);
@@ -30,7 +29,6 @@ const ProfileCard = ({ id, isOwnProfile }) => {
 	dob = getDateString(dob);
 
 	const sendMessage = async () => {
-		if (isGuest) return dispatch(showModal({ msg: "You must be logged in to do this action!!" }));
 		dispatch(setIsLoading(true));
 		dispatch(createChat({ customFetch, id })).then(() => {
 			if (window.innerWidth < 801) navigate("/chat/messenger");

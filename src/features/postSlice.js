@@ -166,7 +166,7 @@ const postSlice = createSlice({
 			state.editingPost = action.payload;
 		},
 	},
-	extraReducers: builder => {
+	extraReducers: (builder) => {
 		builder
 			.addCase(addPost.fulfilled, (state, action) => {
 				state.allPosts.posts.pop();

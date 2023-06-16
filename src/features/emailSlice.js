@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { sendAutomatedEmailService, sendVerificationEmailService } from "../services/emailServices";
+import { sendAutomatedEmailService } from "../services/emailServices";
 
 const initialState = {
     sendingEmail: false,
@@ -7,9 +7,7 @@ const initialState = {
     msg: "",
 };
 
-export const sendAutomatedEmail = createAsyncThunk(
-    "email/sendAutomatedEmail",
-    async (emailData, thunkAPI) => {
+export const sendAutomatedEmail = createAsyncThunk("email/sendAutomatedEmail", async (props, thunkAPI) => {
       try {
         return await sendAutomatedEmailService(emailData);
       } catch (error) {
@@ -21,25 +19,12 @@ export const sendAutomatedEmail = createAsyncThunk(
           error.toString();
         return thunkAPI.rejectWithValue(msg);
       }
-    }
-);
 
-export const sendVerificationEmail = createAsyncThunk(
-    "email/sendVerificationEmail",
-    async (_, thunkAPI) => {
-      try {
-        return await sendVerificationEmailService();
-      } catch (error) {
-        const message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        return thunkAPI.rejectWithValue(message);
-      }
-    }
-);
+    // const { customFetch, emailData } = props;
+    // const { rejectWithValue, dispatch } = thunkAPI;
+	  // const data = await customFetch(fetchPostsService);
+
+});
 
 const emailSlice = createSlice({
     name: "email",
@@ -51,12 +36,6 @@ const emailSlice = createSlice({
             state.msg = "";
         },
     },
-    // extraReducers: {
-    //     [sendVerificationEmail.fulfilled]: (state, action) => {
-	// 		const { payload } = action;
-	// 		console.log('action.payload', payload);
-	// 	},
-    // }
     extraReducers: builder => {
         builder
         .addCase(sendAutomatedEmail.pending, (state) => {
@@ -72,23 +51,6 @@ const emailSlice = createSlice({
             state.sendingEmail = false;
             state.emailSent = false;
             state.msg = action.payload;
-        })
-        // Send Verification Email
-        .addCase(sendVerificationEmail.pending, (state) => {
-            state.isLoading = true;
-        })
-        .addCase(sendVerificationEmail.fulfilled, (state, action) => {
-            // state.isLoading = false;
-            // state.isSuccess = true;
-            state.emailSent = true;
-            state.msg = action.payload;
-            console.log('action.payload', action.payload)
-        })
-        .addCase(sendVerificationEmail.rejected, (state, action) => {
-            state.isLoading = false;
-            state.isError = true;
-            state.msg = action.payload;
-            console.log('action.payload', action.payload)
         })
     }
 });

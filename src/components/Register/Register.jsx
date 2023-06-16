@@ -1,72 +1,104 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { RESET, sendVerificationEmail } from "../../features/emailSlice";
-import { setIsLoading } from "../../features/modalSlice";
-import { login } from "../../features/userSlice";
+import { setIsLoading, showModal } from "../../features/modalSlice";
+import { login, sendVerificationEmail } from "../../features/userSlice";
 import useFetch from "../../hooks/useFetch";
 import { registerService } from "../../services/authServices";
 import DataList from "../DataList/DataList";
-import { useNavigate } from "react-router-dom";
 
-const initialForm = { name: "", password: "", email: "", };
+const initialForm = { email: "", name: "", password: "", confirmPassword: "" };
 
 const Register = ({ setIsRegistering }) => {
-	const [form, setForm] = useState(initialForm);
-	const dispatch = useDispatch();
-	const customFetch = useFetch();
-	//const navigate = useNavigate();
+  const [form, setForm] = useState(initialForm);
+  const { email, name, password, confirmPassword } = form;
 
-	const registerHandler = async e => {
-		e.preventDefault();
-		dispatch(setIsLoading(true));
-		const data = await customFetch(registerService, form);
-		// if (data) dispatch(sendVerificationEmail());
-		if (data) dispatch(login(data));
-		dispatch(setIsLoading(false));
-	};
+  const dispatch = useDispatch();
+  const customFetch = useFetch();
 
-	const updateForm = (key, e) => {
-		setForm(form => ({ ...form, [key]: e.target.value }));
-	};
+  const registerHandler = async (e) => {
+    e.preventDefault();
+    dispatch(setIsLoading(true));
+    const data = await customFetch(registerService, form);
+    if (data) {
+      dispatch(login(data));
+      console.log("data", data);
+      dispatch(sendVerificationEmail({ customFetch, userId: data.id }));
+      dispatch(
+        showModal({ msg: "Please check your email for a verification link." })
+      );
+    }
+    dispatch(setIsLoading(false));
+  };
 
-	return (
-		<form onSubmit={registerHandler} className="register">
-			<div className="email">
-				<label htmlFor="email">Email</label>
-				<input
-					type="email"
-					id="email"
-					placeholder="johndoe@example.com"
-					value={form.email}
-					required
-					onChange={e => updateForm("email", e)}
-				/>
-				<DataList email={form.email} setEmail={value => setForm(form => ({ ...form, email: value }))} />
-			</div>
-			<label htmlFor="name">Username</label>
-			<input
-				type="text"
-				id="name"
-				placeholder="john doe"
-				value={form.name}
-				required
-				onChange={e => updateForm("name", e)}
-			/>
-			<label htmlFor="password">Password</label>
-			<input
-				type="password"
-				id="password"
-				placeholder="Top secret"
-				required
-				value={form.password}
-				onChange={e => updateForm("password", e)}
-			/>
-			<button className="btn" type="submit">Register</button>
-			<p>
-				Already have an account? <span onClick={() => setIsRegistering(false)}>Login</span>
-			</p>
-		</form>
-	);
+  const updateForm = (e) => {
+    const { name, value } = e.target;
+    setForm((form) => ({ ...form, [name]: value }));
+  };
+
+  return (
+    <form onSubmit={registerHandler} className="form register">
+      <div className="input-box">
+        <input
+          //type="email"
+		  type="text"
+          name="email"
+          value={email}
+          required
+          onChange={updateForm}
+        />
+        <span className="label">Email</span>
+        <div className="input-line"></div>
+        <DataList
+          email={email}
+          setEmail={(value) => setForm((form) => ({ ...form, email: value }))}
+        />
+      </div>
+
+      <div className="input-box">
+        <input
+          type="text"
+          name="name"
+          value={name}
+          required
+          onChange={updateForm}
+        />
+        <span className="label">Username</span>
+        <div className="input-line"></div>
+      </div>
+
+      <div className="input-box">
+        <input
+          type="password"
+          name="password"
+          value={password}
+          required
+          onChange={updateForm}
+        />
+        <span className="label">Password</span>
+        <div className="input-line"></div>
+      </div>
+
+      <div className="input-box">
+        <input
+          type="password"
+          name="confirmPassword"
+          value={confirmPassword}
+          required
+          onChange={updateForm}
+        />
+        <span className="label">Confirm Password</span>
+        <div className="input-line"></div>
+      </div>
+
+      <button className="btn" type="submit">
+        Register
+      </button>
+      <p>
+        Already have an account?{" "}
+        <span onClick={() => setIsRegistering(false)}>Login</span>
+      </p>
+    </form>
+  );
 };
 
 export default Register;

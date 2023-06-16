@@ -15,7 +15,7 @@ const fetchVideoService = async (videoId) => {
  // Get Videos by dynamic type
  const fetchVideosService = async (type) => {
     const response = await axiosConfig.get(`/videos/${type}`);
-    console.log('getVideos response:', response.data);
+    // console.log('getVideos response:', response.data);
     return response.data;
 };
 

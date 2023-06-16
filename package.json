@@ -16,6 +16,7 @@
     "compress.js": "^1.2.2",
     "emoji-picker-element": "^1.17.0",
     "firebase": "^9.22.1",
+    "framer-motion": "^10.12.16",
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
