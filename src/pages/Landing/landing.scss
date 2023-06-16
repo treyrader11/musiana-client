@@ -1,200 +1,202 @@
-.title {
-  font-family: "Bebas Neue";
-  font-size: 52px;
-  font-weight: bold;
-  letter-spacing: 0.1rem;
-  color: var(--bg-secondary);
-}
-
-.img-container {
-  position: relative;
-  left: 5rem;
-
-  img {
-    position: absolute;
-    max-height: 20rem;
-    margin: auto;
+.Landing {
+  .title {
+    font-family: "Bebas Neue";
+    font-size: 52px;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    color: var(--bg-secondary);
   }
 
-  .square {
-    position: absolute;
-    border-style: solid;
-    border-color: var(--bg-secondary);
-  }
-}
+  .img-container {
+    position: relative;
+    left: 5rem;
 
-.paragraph {
-  font-family: "Poppins";
-}
+    img {
+      position: absolute;
+      max-height: 20rem;
+      margin: auto;
+    }
 
-.about-content {
-  display: flex;
-  height: 50rem;
-
-  img {
-    position: absolute;
-    margin-top: 10rem;
-    z-index: 1;
+    .square {
+      position: absolute;
+      border-style: solid;
+      border-color: var(--bg-secondary);
+    }
   }
 
-  .circle {
-    position: absolute;
-    background: red;
-    border-radius: 50%;
-    opacity: 50%;
-    margin-top: 10rem;
-    z-index: 10;
+  .paragraph {
+    font-family: "Poppins";
   }
 
-  .about-info {
-    position: absolute;
-    z-index: 10;
+  .about-content {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    height: 50rem;
 
-    h1 {
-      font-family: "Bebas Neue";
-      font-size: 52px;
-      letter-spacing: 0.1rem;
-      color: var(--bg-secondary);
-      margin: auto;
-    }
-
-    p {
-      font-family: "Poppins";
-      margin: auto;
-    }
-
-    h3 {
-      font-family: "Poppins";
-      margin: 0;
-      font-size: 2rem;
-    }
-  }
-
-  .Contact-me {
-    position: absolute;
-    z-index: 10;
-
-    .about-icon {
-      margin: 0 0.5rem 0;
-    }
-
-    .about-icon:hover {
-      color: #ff3636;
-      transition: color var(--transition-speed) ease;
-    }
-  }
-}
-
-/* Small screens */
-@media only screen and (max-width: 600px) {
-  .content {
-    margin-top: 1rem;
-    .title {
-      margin-left: 2rem;
-    }
-    .img-container {
-      height: 15rem;
-
-      img {
-        max-width: 20rem;
-        top: 2rem;
-      }
-
-      .square {
-        height: 10rem;
-        width: 10rem;
-        margin-left: -2rem;
-        border-width: 0.7rem;
-      }
-    }
-    .paragraph {
-      margin-left: 1rem;
-    }
-  }
-
-  .about-content {
-    width: 100vw;
-    margin-left: 1rem;
     img {
-      height: 23rem;
-      margin-left: 2rem;
+      position: absolute;
+      margin-top: 10rem;
+      z-index: 1;
     }
 
     .circle {
-      height: 8rem;
-      width: 8rem;
-      margin-left: 20rem;
+      position: absolute;
+      background: red;
+      border-radius: 50%;
+      opacity: 50%;
+      margin-top: 10rem;
+      z-index: 10;
     }
 
     .about-info {
-      margin-top: 8rem;
-      margin-left: 0rem;
+      position: absolute;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      h1 {
+        font-family: "Bebas Neue";
+        font-size: 52px;
+        letter-spacing: 0.1rem;
+        color: var(--bg-secondary);
+        margin: auto;
+      }
+
+      p {
+        font-family: "Poppins";
+        margin: auto;
+      }
+
+      h3 {
+        font-family: "Poppins";
+        margin: 0;
+        font-size: 2rem;
+      }
     }
 
     .Contact-me {
-      margin-top: 34rem;
-      margin-left: 10rem;
-    }
-  }
-}
+      position: absolute;
+      z-index: 10;
 
-/* Large screens */
-@media only screen and (min-width: 600px) {
-  .content {
-    margin: auto 16rem auto;
-    padding: 1rem;
-
-    .title {
-      margin-left: 10rem;
-    }
-
-    .img-container {
-      height: 25rem;
-
-      img {
-        top: 3rem;
-        left: 5rem;
+      .about-icon {
+        margin: 0 0.5rem 0;
       }
 
-      .square {
-        height: 20rem;
-        width: 20rem;
+      .about-icon:hover {
+        color: #ff3636;
+        transition: color var(--transition-speed) ease;
+      }
+    }
+  }
+
+  /* Small screens */
+  @media only screen and (max-width: 600px) {
+    .content {
+      margin-top: 1rem;
+      .title {
         margin-left: 2rem;
-        border-width: 1rem;
+      }
+      .img-container {
+        height: 15rem;
+
+        img {
+          max-width: 20rem;
+          top: 2rem;
+        }
+
+        .square {
+          height: 10rem;
+          width: 10rem;
+          margin-left: -2rem;
+          border-width: 0.7rem;
+        }
+      }
+      .paragraph {
+        margin-left: 1rem;
       }
     }
-    p {
-      margin-left: 10rem;
+
+    .about-content {
+      width: 100vw;
+      margin-left: 1rem;
+      img {
+        height: 23rem;
+        margin-left: 2rem;
+      }
+
+      .circle {
+        height: 8rem;
+        width: 8rem;
+        margin-left: 20rem;
+      }
+
+      .about-info {
+        margin-top: 8rem;
+        margin-left: 0rem;
+      }
+
+      .Contact-me {
+        margin-top: 34rem;
+        margin-left: 10rem;
+      }
     }
   }
 
-  .about-content {
-    width: 50rem;
-    margin-left: 20rem;
-    margin-top: 5rem;
+  /* Large screens */
+  @media only screen and (min-width: 600px) {
+    .content {
+      margin: auto 16rem auto;
+      padding: 1rem;
 
-    img {
-      height: 30rem;
-      margin-left: 10rem;
+      .title {
+        margin-left: 10rem;
+      }
+
+      .img-container {
+        height: 25rem;
+
+        img {
+          top: 3rem;
+          left: 5rem;
+        }
+
+        .square {
+          height: 20rem;
+          width: 20rem;
+          margin-left: 2rem;
+          border-width: 1rem;
+        }
+      }
+      p {
+        margin-left: 10rem;
+      }
     }
 
-    .circle {
-      height: 13rem;
-      width: 13rem;
-      margin-left: 33rem;
-    }
+    .about-content {
+      width: 50rem;
+      margin-left: 20rem;
+      margin-top: 5rem;
 
-    .about-info {
-      margin-top: 12rem;
-      margin-left: 7rem;
-    }
+      img {
+        height: 30rem;
+        margin-left: 10rem;
+      }
 
-    .Contact-me {
-      margin-top: 30rem;
-      margin-left: 35rem;
+      .circle {
+        height: 13rem;
+        width: 13rem;
+        margin-left: 33rem;
+      }
+
+      .about-info {
+        margin-top: 12rem;
+        margin-left: 7rem;
+      }
+
+      .Contact-me {
+        margin-top: 30rem;
+        margin-left: 35rem;
+      }
     }
   }
 }
@@ -210,14 +212,14 @@ $white: #fff;
   align-items: center;
   width: 100%;
 }
-body {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-color: $white;
-  overflow-x: hidden;
-  font-family: "Poppins", sans-serif;
-}
+// body {
+//   display: block;
+//   width: 100%;
+//   height: 100%;
+//   background-color: $white;
+//   overflow-x: hidden;
+//   font-family: "Poppins", sans-serif;
+// }
 .landing {
   .content_wrapper {
     width: 80%;

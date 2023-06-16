@@ -16,7 +16,7 @@ const stagger = {
   },
 };
 
-const navbar = {
+const nav = {
   initial: {
     y: -60,
     opacity: 0,
@@ -43,17 +43,17 @@ const Navbar = () => {
   const goHome = () => navigate("/");
 
   return (
-    <motion.navbar variants={stagger}>
+    <motion.nav variants={stagger}>
       <motion.div
         className="logo_wrapper icon"
-        variants={navbar}
+        variants={nav}
         onClick={goHome}
       >
         M<span>US</span>iana
       </motion.div>
       <motion.div className="menu_container" variants={stagger}>
         {navLinks.map(({ path, name }, index) => (
-          <motion.span key={`${name}_${index}`} variants={navbar}>
+          <motion.span key={`${name}_${index}`} variants={nav}>
             <NavLink to={path}>
               <IconContext.Provider
                 value={{
@@ -67,13 +67,13 @@ const Navbar = () => {
             </NavLink>
           </motion.span>
         ))}
-        <motion.span className="menu" variants={navbar}>
+        <motion.span className="menu" variants={nav}>
           <span></span>
           <span></span>
           <span></span>
         </motion.span>
       </motion.div>
-    </motion.navbar>
+    </motion.nav>
   );
 };
 
