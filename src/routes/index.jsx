@@ -51,12 +51,12 @@ const Router = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<Layout />}>
-				<Route index element={<Home />} />
-				<Route path="/post/:id" element={<SinglePost />} />
+				<Route index element={authenticate(Home)} />
+				<Route path="/post/:id" element={authenticate(SinglePost)} />
 				<Route path="/verify/:verificationToken" element={<Verify />} />
-				<Route path="/user/:id" element={<Profile />} />
+				<Route path="/user/:id" element={authenticate(Profile)} />
 				<Route path="/videos" element={<Videos type="all" />} />
-				<Route path="/video/:id" element={<Video />} />
+				<Route path="/video/:id" element={authenticate(Video)} />
 				<Route path="/chat" element={authenticate(Chat)} />
 				<Route path="/chat/messenger" element={authenticate(MessengerPage)} />
 				<Route path="*" element={<NotFound />} />

@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 const DataList = ({ email, setEmail }) => {
-  console.log("email", email);
-  console.log("setEmail", setEmail);
   const [mailDomains, setMailDomains] = useState({});
 
   const emailDomains = useMemo(

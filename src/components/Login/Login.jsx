@@ -9,7 +9,7 @@ import {
 import DataList from "../DataList/DataList";
 import { GoogleLogin } from "@react-oauth/google";
 import { login, loginWithGoogle } from "../../features/userSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const initialForm = {
   email: "",
@@ -21,6 +21,7 @@ const Login = ({ setIsRegistering }) => {
   const { email, password } = form;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const customFetch = useFetch();
 
   const updateForm = (e) => {
@@ -54,6 +55,7 @@ const Login = ({ setIsRegistering }) => {
     const data = await customFetch(loginService, { email, password });
     if (data) dispatch(login(data));
     dispatch(setIsLoading(false));
+    navigate("/");
   };
 
   const googleLogin = async ({ credential }) => {
@@ -64,6 +66,7 @@ const Login = ({ setIsRegistering }) => {
     console.log("data", data);
     if (data) dispatch(loginWithGoogle(data));
     dispatch(setIsLoading(false));
+    navigate("/");
   };
 
   return (

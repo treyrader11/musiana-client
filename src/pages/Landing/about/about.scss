@@ -1,0 +1,92 @@
+//@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.title{
+    font-family: "Bebas Neue";
+    font-size: 52px;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    color: var(--bg-secondary);
+}
+
+.img-container{
+    position: relative;
+    left: 5rem;
+
+    img{
+        position: absolute;
+        max-height: 20rem;
+        margin: auto;
+    }
+
+    .square{
+        position: absolute;
+        border-style: solid;
+        border-color: var(--bg-secondary);
+    }
+}
+
+.paragraph{
+    font-family: "Poppins";
+}
+
+.about-content{
+    display: flex;
+    height: 50rem;
+
+    img{
+        position: absolute;
+        margin-top: 10rem;
+        z-index: 1;
+    }
+
+    .circle{
+        position: absolute;
+        background: red;
+        border-radius: 50%;
+        opacity: 50%;
+        margin-top: 10rem;
+        z-index: 10;
+    }
+
+    .about-info{
+        position: absolute;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h1{
+            font-family: "Bebas Neue";
+            font-size: 52px;
+            letter-spacing: 0.1rem;
+            color: var(--bg-secondary);
+            margin: auto;
+        }
+
+        p{
+            font-family: "Poppins";
+            margin: auto;
+        }
+
+        h3{
+            font-family: "Poppins";
+            margin: 0;
+            font-size: 2rem;
+        }
+    }
+
+    .Contact-me{
+        position: absolute;
+        z-index: 10;
+
+        .about-icon{
+            margin: 0 .5rem 0;
+        }
+          
+        .about-icon:hover{
+            color: #FF3636;
+            transition: color var(--transition-speed) ease;
+        }
+    }
+}
