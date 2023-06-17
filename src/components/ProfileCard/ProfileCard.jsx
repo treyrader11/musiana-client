@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { dp, clockIcon, cakeIcon, locationIcon, mailIcon, cameraIcon } from "../../assets";
+import {
+  dp,
+  clockIcon,
+  cakeIcon,
+  locationIcon,
+  mailIcon,
+  cameraIcon,
+} from "../../assets";
 import SetupProfile from "../SetupProfile/SetupProfile";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import useFetch from "../../hooks/useFetch";
@@ -13,100 +20,108 @@ import { logout } from "../../features/userSlice";
 import getDateString from "../../utils/getDateString";
 
 const ProfileCard = ({ id, isOwnProfile }) => {
-	const {
-		users: { users },
-	} = useSelector(state => state);
-	const user = users.find(user => user._id === id) || {};
-	const [isEditing, setIsEditing] = useState(false);
-	const [isUploading, setIsUploading] = useState(false);
+  const {
+    users: { users },
+  } = useSelector((state) => state);
+  const user = users.find((user) => user._id === id) || {};
+  const [isEditing, setIsEditing] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
-	const customFetch = useFetch();
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
+  const customFetch = useFetch();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-	let { name, email, about, dob, location, createdAt, profileImage } = user;
-	createdAt = `Joined on ${getDateString(createdAt)}`;
-	dob = getDateString(dob);
+  let { name, email, about, dob, location, createdAt, profileImage } = user;
+  createdAt = `Joined on ${getDateString(createdAt)}`;
+  dob = getDateString(dob);
 
-	const sendMessage = async () => {
-		dispatch(setIsLoading(true));
-		dispatch(createChat({ customFetch, id })).then(() => {
-			if (window.innerWidth < 801) navigate("/chat/messenger");
-			else navigate("/chat");
-			dispatch(setIsLoading(false));
-		});
-	};
+  const sendMessage = async () => {
+    dispatch(setIsLoading(true));
+    dispatch(createChat({ customFetch, id })).then(() => {
+      if (window.innerWidth < 801) navigate("/chat/messenger");
+      else navigate("/chat");
+      dispatch(setIsLoading(false));
+    });
+  };
 
-	const hideUploading = () => {
-		setIsUploading(false);
-	};
-	const hideEditing = () => {
-		setIsEditing(false);
-	};
+  const hideUploading = () => {
+    setIsUploading(false);
+  };
+  const hideEditing = () => {
+    setIsEditing(false);
+  };
 
-	return (
-		<section className="profilecard gradient-border">
-			{isOwnProfile && (
-				<>
-					<Backdrop show={isEditing} onClose={hideEditing}>
-						<SetupProfile close={hideEditing} user={user} />
-					</Backdrop>
-					<Backdrop show={isUploading} onClose={hideUploading}>
-						<ImageUpload close={hideUploading} />
-					</Backdrop>
-				</>
-			)}
-			<header>
-				<div>
-					<img
-						src={profileImage || dp}
-						alt="profile_image"
-						className="profilecard__dp roundimage"
-					/>
-					{isOwnProfile && (
-						<div className="dp-upload">
-							<img
-								src={cameraIcon}
-								alt="change_profile_image"
-								onClick={() => setIsUploading(true)}
-							/>
-						</div>
-					)}
-				</div>
-				<h1>{name || "User"}</h1>
-				<h2>{about || "About"}</h2>
-			</header>
-			<article>
-				<div className="profilecard__info">
-					<img src={clockIcon} alt="join date" />
-					<h3>{createdAt}</h3>
-				</div>
-				<div className="profilecard__info">
-					<img src={locationIcon} alt="location" />
-					<h3>{location}</h3>
-				</div>
-				<div className="profilecard__info">
-					<img src={mailIcon} alt="mail" />
-					<h3>{email}</h3>
-				</div>
-				<div className="profilecard__info">
-					<img src={cakeIcon} alt="date of birth" />
-					<h3>{dob}</h3>
-				</div>
-			</article>
-			{isOwnProfile ? (
-				<div className="btn-group">
-					<button className="btn" onClick={() => dispatch(logout())}>Logout</button>
-					<button className="btn" onClick={() => setIsEditing(true)}>Edit Profile</button>
-				</div>
-			) : (
-				<div className="btn-group">
-					<button className="btn" onClick={sendMessage}>Message</button>
-					<button className="btn" disabled>Add Friend</button>
-				</div>
-			)}
-		</section>
-	);
+  return (
+    <section className="profilecard gradient-border">
+      {isOwnProfile && (
+        <>
+          <Backdrop show={isEditing} onClose={hideEditing}>
+            <SetupProfile close={hideEditing} user={user} />
+          </Backdrop>
+          <Backdrop show={isUploading} onClose={hideUploading}>
+            <ImageUpload close={hideUploading} />
+          </Backdrop>
+        </>
+      )}
+      <header>
+        <div>
+          <img
+            src={profileImage || dp}
+            alt="profile_image"
+            className="profilecard__dp roundimage"
+          />
+          {isOwnProfile && (
+            <div className="dp-upload">
+              <img
+                src={cameraIcon}
+                alt="change_profile_image"
+                onClick={() => setIsUploading(true)}
+              />
+            </div>
+          )}
+        </div>
+        <h1>{name || "User"}</h1>
+        <h2>{about || "About"}</h2>
+      </header>
+      <article>
+        <div className="profilecard__info">
+          <img src={clockIcon} alt="join date" />
+          <h3>{createdAt}</h3>
+        </div>
+        <div className="profilecard__info">
+          <img src={locationIcon} alt="location" />
+          <h3>{location}</h3>
+        </div>
+        <div className="profilecard__info">
+          <img src={mailIcon} alt="mail" />
+          <h3>{email}</h3>
+        </div>
+        <div className="profilecard__info">
+          <img src={cakeIcon} alt="date of birth" />
+          <h3>{dob}</h3>
+        </div>
+      </article>
+      {isOwnProfile ? (
+        <div className="btn-group">
+          <button className="btn" onClick={() => dispatch(logout())}>
+            Logout
+          </button>
+          <button className="btn" onClick={() => setIsEditing(true)}>
+            Edit Profile
+          </button>
+        </div>
+      ) : (
+        <div className="btn-group">
+          <button className="btn" onClick={sendMessage}>
+            Message
+          </button>
+          <button className="btn" disabled>
+            Add Friend
+          </button>
+        </div>
+      )}
+    </section>
+  );
 };
 
 export default ProfileCard;

@@ -75,8 +75,8 @@ const Login = ({ setIsRegistering }) => {
         <div className="input-box">
           <input
             type="text"
-            //type="email"
             name="email"
+            autoComplete="off"
             required
             value={email}
             onChange={updateForm}
