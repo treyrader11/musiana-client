@@ -41,7 +41,7 @@ function DropdownMenu({ userId }) {
 
       const handleClick = () => {
         if (goToMenu) setActiveMenu(goToMenu);
-        if (logout) logoutUser() && navigate("/");
+        if (logout) logoutUser() && navigate("/signup");
         if (profile) goToProfile();
         if (video) goToVideos();
       };

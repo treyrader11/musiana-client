@@ -44,12 +44,9 @@ const ProfileCard = ({ id, isOwnProfile }) => {
     });
   };
 
-  const hideUploading = () => {
-    setIsUploading(false);
-  };
-  const hideEditing = () => {
-    setIsEditing(false);
-  };
+  const hideUploading = () => setIsUploading(false);
+  const hideEditing = () => setIsEditing(false);
+  const handleLogout = () => dispatch(logout()) && navigate("/signup");
 
   return (
     <section className="profilecard gradient-border">
@@ -103,7 +100,7 @@ const ProfileCard = ({ id, isOwnProfile }) => {
       </article>
       {isOwnProfile ? (
         <div className="btn-group">
-          <button className="btn" onClick={() => dispatch(logout())}>
+          <button className="btn" onClick={handleLogout}>
             Logout
           </button>
           <button className="btn" onClick={() => setIsEditing(true)}>
