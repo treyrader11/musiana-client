@@ -87,7 +87,6 @@ const Appbar = () => {
     >
       <>
         <Backdrop show={wizardOpen}>
-          {/* <Wizard close={hideUploading} /> */}
           <Wizard />
         </Backdrop>
       </>
@@ -98,9 +97,6 @@ const Appbar = () => {
         <img src={isSidebarVisible ? closeIcon : hamburger} alt="hamburger" />
       </div>
       <Link to="/">
-        {/* <Tooltip position="bottom" text="Go home">
-					<img src={homeIcon} alt="home" className="home-icon" />
-				</Tooltip> */}
         <img
           width="64"
           height="64"

@@ -39,8 +39,8 @@ const Register = ({ setIsRegistering }) => {
     <form onSubmit={registerHandler} className="form register">
       <div className="input-box">
         <input
-          //type="email"
-		  type="text"
+          type="text"
+          autoComplete="off"
           name="email"
           value={email}
           required
@@ -58,6 +58,7 @@ const Register = ({ setIsRegistering }) => {
         <input
           type="text"
           name="name"
+          autoComplete="off"
           value={name}
           required
           onChange={updateForm}
