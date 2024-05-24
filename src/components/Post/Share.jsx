@@ -8,118 +8,103 @@ import { useDispatch } from "react-redux";
 import { showModal } from "../../features/modalSlice";
 
 const ShareItem = ({ item }) => {
-	const { onClick, Icon, title, id } = item;
-	return (
-		<div className="share__item buttons-container" onClick={onClick}>
-			<div className="button animated spin" id={id}>
-				<Icon className="icon" />
-			</div>
-			<p>{title}</p>
-		</div>
-	);
+  const { onClick, Icon, title, id } = item;
+  return (
+    <div className="share__item buttons-container" onClick={onClick}>
+      <div className="button animated spin" id={id}>
+        <Icon className="icon" />
+      </div>
+      <p>{title}</p>
+    </div>
+  );
 };
 
 const Share = ({ post }) => {
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	const copyURL = () => {
-		// window.navigator.clipboard.writeText(`https://adra-amie.netlify.app/post/${post._id}`);
-		window.navigator.clipboard.writeText(`https://musiane.co/post/${post._id}`);
-		dispatch(showModal({ msg: "URL copied to clipboard" }));
-	};
+  const copyURL = () => {
+    window.navigator.clipboard.writeText(
+      `https://musiana.vercel.app/post/${post._id}`
+    );
+    dispatch(showModal({ msg: "URL copied to clipboard" }));
+  };
 
-	const copyEmbed = () => {
-		window.navigator.clipboard.writeText(
-			// `<iframe
-			// 	src="https://adra-amie.netlify.app/post/${post._id}?embed=true"
-			// 	width="500"
-			// 	height="700"
-			// 	title="social-media-app"
-			// ></iframe>`
-			`<iframe
-				src="https://musiane/post/${post._id}?embed=true"
+  const copyEmbed = () => {
+    window.navigator.clipboard.writeText(
+      `<iframe
+				src="https://musiana.vercel.app/post/${post._id}?embed=true"
 				width="500"
 				height="700"
 				title="Musiane"
 			></iframe>`
-		);
-		dispatch(showModal({ msg: "Copied embed code to clipboard" }));
-	};
+    );
+    dispatch(showModal({ msg: "Copied embed code to clipboard" }));
+  };
 
-	// const shareToUrls = {
-	// 	twitter: `https://twitter.com/intent/tweet?text=${post.caption}&url=https://adra-amie.netlify.app/post/${post._id}`,
-	// 	facebook: `https://www.facebook.com/dialog/share?
-	// 	app_id=287203076842060
-	// 	&display=popup
-	// 	&href=https://adra-amie.netlify.app/post/${post._id}
-	// 	&redirect_uri=https://adra-amie.netlify.app/post/${post._id}`,
-	// 	linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=https://adra-amie.netlify.app/post/${post._id}`,
-	// 	whatsapp: `https://api.whatsapp.com/send/?text=${post.caption} Link: https://adra-amie.netlify.app/post/${post._id}`,
-	// };
-	const shareToUrls = {
-		twitter: `https://twitter.com/intent/tweet?text=${post.caption}&url=https://musiane.co/post/${post._id}`,
-		facebook: `https://www.facebook.com/dialog/share?
+  const shareToUrls = {
+    twitter: `https://twitter.com/intent/tweet?text=${post.caption}&url=https://musiana.vercel.app/post/${post._id}`,
+    facebook: `https://www.facebook.com/dialog/share?
 		app_id=287203076842060
 		&display=popup
-		&href=https://musiane.co/post/${post._id}
-		&redirect_uri=https://adra-amie.netlify.app/post/${post._id}`,
-		linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=https://musiane.co/post/${post._id}`,
-		whatsapp: `https://api.whatsapp.com/send/?text=${post.caption} Link: https://musiane.co/post/${post._id}`,
-	};
+		&href=https://musiana.vercel.app/${post._id}
+		&redirect_uri=https://musiana.vercel.app/${post._id}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=https://musiana.vercel.app/post/${post._id}`,
+    whatsapp: `https://api.whatsapp.com/send/?text=${post.caption} Link: https://musiana.vercel.app/post/${post._id}`,
+  };
 
-	const shareTo = dest => {
-		window.open(shareToUrls[dest], "_blank");
-	};
+  const shareTo = (dest) => {
+    window.open(shareToUrls[dest], "_blank");
+  };
 
-	const shareItems = [
-		{
-			title: "Embed",
-			onClick: copyEmbed,
-			Icon: ImEmbed,
-			id: "embed",
-		},
-		{
-			title: "Whatsapp",
-			onClick: () => shareTo("whatsapp"),
-			Icon: IoLogoWhatsapp,
-			id: "whatsapp",
-		},
-		{
-			title: "Facebook",
-			onClick: () => shareTo("facebook"),
-			Icon: BsFacebook,
-			id: "facebook",
-		},
-		{
-			title: "Twitter",
-			onClick: () => shareTo("twitter"),
-			Icon: AiOutlineTwitter,
-			id: "twitter",
-		},
-		{
-			title: "Linked In",
-			onClick: () => shareTo("linkedin"),
-			Icon: FaLinkedinIn,
-			id: "linkedin",
-		},
-	];
+  const shareItems = [
+    {
+      title: "Embed",
+      onClick: copyEmbed,
+      Icon: ImEmbed,
+      id: "embed",
+    },
+    {
+      title: "Whatsapp",
+      onClick: () => shareTo("whatsapp"),
+      Icon: IoLogoWhatsapp,
+      id: "whatsapp",
+    },
+    {
+      title: "Facebook",
+      onClick: () => shareTo("facebook"),
+      Icon: BsFacebook,
+      id: "facebook",
+    },
+    {
+      title: "Twitter",
+      onClick: () => shareTo("twitter"),
+      Icon: AiOutlineTwitter,
+      id: "twitter",
+    },
+    {
+      title: "Linked In",
+      onClick: () => shareTo("linkedin"),
+      Icon: FaLinkedinIn,
+      id: "linkedin",
+    },
+  ];
 
-	return (
-		<article className="share">
-			<h2>Share</h2>
-			<div className="share__items">
-				{shareItems.map((item, i) => (
-					<ShareItem item={item} key={i} />
-				))}
-			</div>
-			<div className="share__url">
-				{post._id}
-				<button className="btn" onClick={copyURL}>
-					Copy URL
-				</button>
-			</div>
-		</article>
-	);
+  return (
+    <article className="share">
+      <h2>Share</h2>
+      <div className="share__items">
+        {shareItems.map((item, i) => (
+          <ShareItem item={item} key={i} />
+        ))}
+      </div>
+      <div className="share__url">
+        {post._id}
+        <button className="btn" onClick={copyURL}>
+          Copy URL
+        </button>
+      </div>
+    </article>
+  );
 };
 
 export default Share;
